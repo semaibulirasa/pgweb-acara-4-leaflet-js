@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet JS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        html,
+        body,
+        #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([-6.2265589, 106.8098284], 12);
+
+        // Tile Layer Base Map
+        var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        });
+
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        var rupabumiindonesia = L.tileLayer('https://geoservices.big.go.id/rbi/rest/services/BASEMAP/Rupabumi_Indonesia/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Badan Informasi Geospasial'
+        });
+
+        var Google_Terrain = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ["mt0", "mt1", "mt2", "mt3"],
+            attribution: 'Google'
+        });
+
+        var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            maxZoom: 17,
+            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        });
+
+        // Menambahkan basemap ke dalam peta
+        Google_Terrain.addTo(map);
+
+        // Marker
+        var marker = L.marker([-6.2265589, 106.8098284]);
+        var marker2 = L.marker([-6.2446892, 106.8012500]);
+        var marker3 = L.marker([-6.2433594, 106.8042314]);
+
+        // Menambahkan marker ke dalam peta
+        marker.addTo(map);
+        marker2.addTo(map);
+        marker3.addTo(map);
+
+        // Popup untuk SCBD 
+        marker.bindPopup("<b>Kawasan Sudirman Central Business District (SCBD) merupakan kawasan bisnis modern yang terkenal elite.");
+        marker.openPopup();
+
+        // Popup untuk Blok M
+        marker2.bindPopup("<b>Pusat kuliner, coffee shop, serta tempat nongkrong hits berkonsep retro-modern.");
+        marker2.openPopup();
+
+        // Popup untuk Kurasu Jakarta
+        marker3.bindPopup("<b>Salah satu tongkrongan hits anak JakSel dan sekitarnya.");
+        marker3.openPopup();
+
+        // Tooltip SCBD
+        marker.bindTooltip("Titik ini adalah wilayah SCBD");
+        marker.openTooltip();
+
+        // Tooltip Blok M
+        marker2.bindTooltip("Titik ini adalah wilayah Blok M");
+        marker2.openTooltip();
+
+        // Tooltip Kurasu Jakarta
+        marker3.bindTooltip("Titik ini adalah Kurasu Jakarta");
+        marker3.openTooltip();
+
+        // Circle
+        var circle = L.circle([-6.2287925, 106.8266612], {
+            color: "pink", // warna garis
+            opacity: 1, // opacity garis
+            fillColor: "sage green", // warna fill
+            fillOpacity: 0.5, // opacity fill
+            radius: 1000, // radius dalam meter
+        });
+
+        // Menambahkan circle ke dalam peta
+        circle.addTo(map);
+
+        // Popup
+        circle.bindPopup("<b>Hallo</b><br>Ini adalah popup circle");
+        circle.openPopup();
+
+        // Tooltip
+        circle.bindTooltip("Ini adalah tooltip circle", { sticky: true });
+        circle.openTooltip();
+
+        // Polyline
+        var vertexPolyline = [
+            [-6.2184629, 106.8025589],
+            [-6.1753290, 106.8271923],
+            [-6.2570287, 106.8466330],
+        ];
+        var polyline = L.polyline(vertexPolyline, {
+            color: "pink", // warna garis
+            weight: 4, // ketebalan garis
+            opacity: 1, // opacity garis
+        });
+
+        // Menambahkan polyline ke dalam peta
+        polyline.addTo(map);
+
+        // Popup
+        polyline.bindPopup("<b>Hallo</b><br>Ini adalah popup polyline");
+        polyline.openPopup();
+
+        // Tooltip
+        polyline.bindTooltip("Ini adalah tooltip polyline", { sticky: true });
+        polyline.openTooltip();
+
+        // Polygon
+        var vertexPolygon = [
+            [-6.1574398, 106.7968941],
+            [-6.1569275, 106.8614388],
+            [-6.2120634, 106.8471694],
+            [-6.2119118, 106.7901993]
+        ];
+        var polygon = L.polygon(vertexPolygon, {
+            color: "pink", // warna garis
+            weight: 3, // ketebalan garis
+            opacity: 1, // opacity garis
+            fillColor: "#0f3", // warna fill
+            fillOpacity: 0.5, // opacity fill
+        });
+
+        // Menambahkan polygon ke dalam peta
+        polygon.addTo(map);
+
+        // Popup
+        polygon.bindPopup("<b>Hallo</b><br>Ini adalah popup polygon");
+        polygon.openPopup();
+
+        // Tooltip
+        polygon.bindTooltip("Ini adalah tooltip polygon");
+        polygon.openTooltip();
+
+        // Control Layer
+        var baseMaps = {
+            "OpenStreetMap": osm,
+            "Esri World Imagery": Esri_WorldImagery,
+            "Rupa Bumi Indonesia": rupabumiindonesia,
+            "Google Terrain": Google_Terrain,
+            "Open Topo Map": OpenTopoMap,
+        };
+
+        var overlayMaps = {
+            "SCBD": marker,
+            "Blok M": marker2,
+            "Kurasu": marker3,
+            "Circle": circle,
+            "Polyline": polyline,
+            "Polygon": polygon,
+        };
+
+        var controllayer = L.control.layers(baseMaps, overlayMaps);
+        controllayer.addTo(map);
+
+        // Scale
+        var scale = L.control.scale()
+        position: "bottomright",
+            scale.addTo(map);
+
+        // Geolocation
+        map.locate({
+            setView: true,
+            maxZoom: 16,
+        });
+
+        // Fungsi untuk menampilkan lokasi
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+
+            // Menampilkan marker pada lokasi 
+            L.marker(e.latlng).addTo(map).bindPopup("Anda berada dalam radius " + radius + " meter dari titik ini").openPopup();
+
+            // Menampilkan circle pada lokasi
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        map.on("locationfound", onLocationFound);
+
+        // Fungsi untuk menampilkan pesan error
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        map.on("locationerror", onLocationError);
+    </script>
+</body>
+
+</html>
